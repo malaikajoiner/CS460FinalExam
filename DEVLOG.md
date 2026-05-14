@@ -15,16 +15,16 @@
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
 
-I first answered the problem analysis, design, and correctness questions to understand why and how we are making an algorithm to decide the order to reach relic chambers. 
+I first answered the problem analysis, design, and correctness questions to understand why and how we are making an algorithm to decide the order to reach relic chambers. I will probably implement the dijkstras algortithm first. The hardest part might be figuring out how to calculate the proper order. I will test using the testing function given in the assignment.
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [5-14-26]: [Short description]
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+I added the code for part 1 and 2, the implementation of dijkstras and the function to make it run on all the sources.
 
 ---
 
@@ -49,8 +49,8 @@ _Your entry here._
 
 | Part | Estimated Hours |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
+| Part 1: Problem Analysis | 3 min |
+| Part 2: Precomputation Design | 20 min |
 | Part 3: Algorithm Correctness | |
 | Part 4: Search Design | |
 | Part 5: State and Search Space | |
