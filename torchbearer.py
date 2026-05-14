@@ -168,7 +168,28 @@ def dijkstra_invariant_check():
 
     TODO
     """
-    return "TODO"
+    str = '''
+
+        - Uses greedy logic to assume that the smallest path is optimal.
+        - In the case that all distances are nonnegative, once a shortest distance is found, a better path cannot be found later.
+
+
+        - For nodes already finalized, the distance is the finalized shortest path.
+
+        - For nodes not yet finalized, their distance is the shortest path discovered so far.
+
+
+        - Initialization : When starting at the start node, the distance from S to S is 0, which is the final shortest path. The other nodes havent been found yet, so their default shortest distance is the only one discovered, thus the shortest so far.
+
+        - Maintenance : All weights are nonnegative, so once a node is visited, there isnt a way to lower the distance, so the shortest path is final.
+
+        - Termination : At the end of the algorithm, when all nodes are finalized, all the finalized nodes will have their optimal shortest path recorded.
+
+
+        Knowing the correct shortest paths from each node will help make the decison to create the optimal route from S, the relic chambers, and T.
+
+        '''
+    return str
 
 
 # =============================================================================
@@ -185,7 +206,29 @@ def explain_search():
 
     TODO
     """
-    return "TODO"
+
+    str = '''
+            - The failure is being unable to find a better path that chooses different orders.
+
+            - Counter example: 
+
+            | From \ To | B   | C   | D   | T   |
+            |-----------|-----|-----|-----|-----|
+            | S         | 1   | 2   | 2   | --  |
+            | B         | --  | 100 | 100 | 1   |
+            | C         | 1   | --  | 1   | 1   |
+            | D         | 1   | 1   | --  | 1   |
+
+            Route 1 -  S > B > C > D > T = 1 + 100 + 1 + 1 = 103
+            Route 2 - S > D > C > B > T = 2 + 1 + 1 + 1 = 5
+
+            - Greedy will choose to visit B first and end up in a route like route 1, but optimal is route like route 2.
+            - Greedy loses because it just picks the current best option and cannot analyze future options.
+
+            The algorithm must explore how the order will affect the total cost.
+
+        '''
+    return str
 
 
 # =============================================================================

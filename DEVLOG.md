@@ -24,7 +24,7 @@ I first answered the problem analysis, design, and correctness questions to unde
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-I added the code for part 1 and 2, the implementation of dijkstras and the function to make it run on all the sources.
+I added the code for part 1 and 2, the implementation of dijkstras and the function to make it run on all the sources. Also added the string returns for part 3 and 4.
 
 ---
 
@@ -51,8 +51,8 @@ _Your entry here._
 |---|---|
 | Part 1: Problem Analysis | 3 min |
 | Part 2: Precomputation Design | 20 min |
-| Part 3: Algorithm Correctness | |
-| Part 4: Search Design | |
+| Part 3: Algorithm Correctness | 10 min |
+| Part 4: Search Design | 10 min |
 | Part 5: State and Search Space | |
 | Part 6: Pruning | |
 | Part 7: Implementation | |
