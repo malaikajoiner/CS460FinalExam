@@ -1,29 +1,19 @@
 # The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Malaika Joiner
+**Student ID:** 130036319
 **Course:** CS 460 – Algorithms | Spring 2026
-
-> This README is your project documentation. Write it the way a developer would document
-> their design decisions , bullet points, brief justifications, and concrete examples where
-> required. You are not writing an essay. You are explaining what you built and why you built
-> it that way. Delete all blockquotes like this one before submitting.
 
 ---
 
 ## Part 1: Problem Analysis
 
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
+- Even if you know the shortest path from S to each individual relic chamber, 
+  it cannot decide the order you need to go in order to reach each relic and end up at T.
 
-- **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+- We need to calculate the optimal order to visit each relic chamber.
 
-- **What decision remains after all inter-location costs are known:**
-  _Your answer here._
-
-- **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+- We must find the minimum of the overall path/orders because they may differ in cost.
 
 ---
 
@@ -31,70 +21,52 @@
 
 ### Part 2a: Source Selection
 
-> List the source node types as a bullet list. For each, one-line reason.
-
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| Start Node | The first move will be from the start node. |
+| Relic Chamber Node | After visiting a relic chamber, the next move will be from that chamber |
 
 ### Part 2b: Distance Storage
 
-> Fill in the table. No prose required.
-
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | HashMap |
+| What the keys represent | ordered pairs of 2 nodes |
+| What the values represent | shortest distance between starting node to destination node |
+| Lookup time complexity | O(1) |
+| Why O(1) lookup is possible | hashmap search functions are O(1) if keys are all different |
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- Dijkstra runs n+1 times
+- Each run costs O((V+E)log V)
+- Do a run of dijkstras on each source node (S and relic chambers)
+- The total cost is O((n+1)((V+E)log V))
 
 ---
 
 ## Part 3: Algorithm Correctness
 
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
+- Uses greedy logic to assume that the smallest path is optimal.
+- In the case that all distances are nonnegative, once a shortest distance is found, a better path cannot be found later.
 
 ### Part 3a: What the Invariant Means
 
-> Two bullets: one for finalized nodes, one for non-finalized nodes.
-> Do not copy the invariant text from the spec.
+- For nodes already finalized, the distance is the finalized shortest path.
 
-- **For nodes already finalized (in S):**
-  _Your answer here._
-
-- **For nodes not yet finalized (not in S):**
-  _Your answer here._
+- For nodes not yet finalized, their distance is the shortest path discovered so far.
 
 ### Part 3b: Why Each Phase Holds
 
-> One to two bullets per phase. Maintenance must mention nonnegative edge weights.
+- Initialization : When starting at the start node, the distance from S to S is 0, which is the final shortest path. The other nodes havent been found yet, so their default shortest distance is the only one discovered, thus the shortest so far.
 
-- **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+- Maintenance : All weights are nonnegative, so once a node is visited, there isnt a way to lower the distance, so the shortest path is final.
 
-- **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
-
-- **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+- Termination : At the end of the algorithm, when all nodes are finalized, all the finalized nodes will have their optimal shortest path recorded.
 
 ### Part 3c: Why This Matters for the Route Planner
 
-> One sentence connecting correct distances to correct routing decisions.
-
-_Your answer here._
+Knowing the correct shortest paths from each node will help make the decison to create the optimal route from S, the relic chambers, and T.
 
 ---
 
@@ -102,20 +74,26 @@ _Your answer here._
 
 ### Why Greedy Fails
 
-> State the failure mode. Then give a concrete counter-example using specific node names
-> or costs (you may use the illustration example from the spec). Three to five bullets.
+- The failure is being unable to find a better path that chooses different orders.
 
-- **The failure mode:** _Your answer here._
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- Counter example: 
+
+| From \ To | B   | C   | D   | T   |
+|-----------|-----|-----|-----|-----|
+| S         | 1   | 2   | 2   | --  |
+| B         | --  | 100 | 100 | 1   |
+| C         | 1   | --  | 1   | 1   |
+| D         | 1   | 1   | --  | 1   |
+
+Route 1 -  S > B > C > D > T = 1 + 100 + 1 + 1 = 103
+Route 2 - S > D > C > B > T = 2 + 1 + 1 + 1 = 5
+
+- Greedy will choose to visit B first and end up in a route like route 1, but optimal is route like route 2.
+- Greedy loses because it just picks the current best option and cannot analyze future options.
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
-
-- _Your answer here._
+The algorithm must explore how the order will affect the total cost.
 
 ---
 
@@ -123,33 +101,26 @@ _Your answer here._
 
 ### Part 5a: State Representation
 
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
-
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
+| Current location | node | str | the current location can be Start or a relic chamber node named "S" or "R1" "R2" etc |
+| Relics already collected | visited | set | set contains the names of the relic chamber nodes visited |
+| Fuel cost so far | cost | int | amount of cost used to reach the current location |
 
 ### Part 5b: Data Structure for Visited Relics
 
-> Fill in the table.
-
 | Property | Your answer |
 |---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
+| Data structure chosen | Hash set |
+| Operation: check if relic already collected | Time complexity: O(1) |
+| Operation: mark a relic as collected | Time complexity: O(1) |
+| Operation: unmark a relic (backtrack) | Time complexity: O(1) |
+| Why this structure fits | it makes accessing information about the relic chambers have an optimal time complexity. |
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- The worst case is O(V*(2^k))
+- You must explore possibilities of costs with all possibilities of orders and which nodes you have already visited.
 
 ---
 
@@ -157,30 +128,22 @@ _Your answer here._
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
-
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- The current minimum paths to reach each state are tracked. 
+- You use this information everytime you visit a state.
+- If it already has a cheaper state, the algorithm will know to prune the new, less optimal paths.
 
 ### Part 6b: Lower Bound Estimation
 
-> Three bullets.
-
-- **What information is available at the current state:** _Your answer here._
-- **What the lower bound accounts for:** _Your answer here._
-- **Why it never overestimates:** _Your answer here._
+- The current state holds the current node and the set of relics
+- The lower bound should account the minimum cost needed to visit the relics and exit using the shortest distances found.
+- Because it uses the shortest path, it cannot be more than the true remaining cost
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
-
-- _Your answer here._
+- Pruning is safe because it will only get rid of routes that are guarenteed to lead to a worse solution.
 
 ---
 
 ## References
 
-> Bullet list. If none beyond lecture notes, write that.
-
-- _Your references here._
+- Lecture notes from CS460.

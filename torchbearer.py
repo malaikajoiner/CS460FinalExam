@@ -2,8 +2,8 @@
 CS 460 – Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Malaika Joiner
+Student ID:   130036319
 
 INSTRUCTIONS
 ------------
@@ -34,7 +34,16 @@ def explain_problem():
 
     TODO
     """
-    return "TODO"
+    str = """
+            - Even if you know the shortest path from S to each individual relic chamber, 
+            it cannot decide the order you need to go in order to reach each relic and end up at T.
+
+            - We need to calculate the optimal order to visit each relic chamber.
+
+            - We must find the minimum of the overall path/orders because they may differ in cost.
+          """
+    
+    return str
 
 
 # =============================================================================
