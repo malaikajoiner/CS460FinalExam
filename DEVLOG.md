@@ -25,15 +25,13 @@ I ran into a bug where I accidentally used the same variable name for the distan
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – [5-14-25]: Post-Implementation Reflection
 
-> Required. Written after your implementation is complete. Describe what you would
-> change or improve given more time.
+If i were to improve my already written code, I think there should be a way to possibly prevent the need of recomputing similar subproblems if the algorithm can remember the already calculated routes and use it for the larger problems.
+
 ---
 
-## Final Entry – [Date]: Time Estimate
-
-> Required. Estimate minutes spent per part. Honesty is expected; accuracy is not graded.
+## Final Entry – [5-14-25]: Time Estimate
 
 | Part | Estimated Hours |
 |---|---|
@@ -41,8 +39,8 @@ I ran into a bug where I accidentally used the same variable name for the distan
 | Part 2: Precomputation Design | 20 min |
 | Part 3: Algorithm Correctness | 10 min |
 | Part 4: Search Design | 10 min |
-| Part 5: State and Search Space | |
-| Part 6: Pruning | |
-| Part 7: Implementation | |
-| README and DEVLOG writing | |
-| **Total** | |
+| Part 5: State and Search Space | 10 min |
+| Part 6: Pruning | 10 min |
+| Part 7: Implementation | 5 hours |
+| README and DEVLOG writing | 1.5 hour |
+| **Total** | 8 hours |
