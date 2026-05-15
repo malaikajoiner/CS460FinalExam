@@ -3,17 +3,9 @@
 **Student Name:** Malaika Joiner
 **Student ID:** 130036319
 
-> Instructions: Write at least four dated entries. Required entry types are marked below.
-> Two to five sentences per entry is sufficient. Write entries as you go, not all in one
-> sitting. Graders check that entries reflect genuine work across multiple sessions.
-> Delete all blockquotes before submitting.
-
 ---
 
 ## Entry 1 – [5-12-26]: Initial Plan
-
-> Required. Write this before writing any code. Describe your plan: what you will
-> implement first, what parts you expect to be difficult, and how you plan to test.
 
 I first answered the problem analysis, design, and correctness questions to understand why and how we are making an algorithm to decide the order to reach relic chambers. I will probably implement the dijkstras algortithm first. The hardest part might be figuring out how to calculate the proper order. I will test using the testing function given in the assignment.
 
@@ -21,16 +13,15 @@ I first answered the problem analysis, design, and correctness questions to unde
 
 ## Entry 2 – [5-14-26]: [Short description]
 
-> Required. At least one entry must describe a bug, wrong assumption, or design change
-> you encountered. Describe what went wrong and how you resolved it.
-
 I added the code for part 1 and 2, the implementation of dijkstras and the function to make it run on all the sources. Also added the string returns for part 3 and 4.
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5-14-26]: [Short description]
 
-_Your entry here._
+Changed precompute distances and implemented the remainging parts. Also changed variable names from README to have more understandable names.
+
+I ran into a bug where I accidentally used the same variable name for the distance table and the shortest distance, which created errors. Similarly, my run dijkstras algorithm accidently returned the distance variable instead of the distance table. I solved that by renaming them different things. I also made the mistake of editing a list while looping through the for each, so instead I changed the design to create a new copy list.
 
 ---
 
@@ -38,9 +29,6 @@ _Your entry here._
 
 > Required. Written after your implementation is complete. Describe what you would
 > change or improve given more time.
-
-_Your entry here._
-
 ---
 
 ## Final Entry – [Date]: Time Estimate

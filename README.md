@@ -30,7 +30,7 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | HashMap |
+| Data structure name | dictionary |
 | What the keys represent | ordered pairs of 2 nodes |
 | What the values represent | shortest distance between starting node to destination node |
 | Lookup time complexity | O(1) |
@@ -103,24 +103,24 @@ The algorithm must explore how the order will affect the total cost.
 
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | node | str | the current location can be Start or a relic chamber node named "S" or "R1" "R2" etc |
-| Relics already collected | visited | set | set contains the names of the relic chamber nodes visited |
-| Fuel cost so far | cost | int | amount of cost used to reach the current location |
+| Current location | current_loc | str | the current location can be Start or a relic chamber node named "S" or "R1" "R2" etc |
+| Relics already collected | relics_visited_order | list | set contains the names of the relic chamber nodes visited |
+| Fuel cost so far | cost_so_far | int | amount of cost used to reach the current location |
 
 ### Part 5b: Data Structure for Visited Relics
 
 | Property | Your answer |
 |---|---|
-| Data structure chosen | Hash set |
-| Operation: check if relic already collected | Time complexity: O(1) |
+| Data structure chosen | list |
+| Operation: check if relic already collected | Time complexity: O(n) |
 | Operation: mark a relic as collected | Time complexity: O(1) |
 | Operation: unmark a relic (backtrack) | Time complexity: O(1) |
-| Why this structure fits | it makes accessing information about the relic chambers have an optimal time complexity. |
+| Why this structure fits | Using a list would be more beneficial for tracking order|
 
 ### Part 5c: Worst-Case Search Space
 
-- The worst case is O(V*(2^k))
-- You must explore possibilities of costs with all possibilities of orders and which nodes you have already visited.
+- The worst case is O(k!)
+- You must recursively explore possibilities of costs with all possibilities of orders and which nodes you have already visited.
 
 ---
 

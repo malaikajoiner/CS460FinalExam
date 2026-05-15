@@ -72,7 +72,7 @@ def select_sources(spawn, relics, exit_node):
     for relic in relics:
         sources.add(relic)
 
-    return sources
+    return list(sources)
 
 
 def run_dijkstra(graph, source):
@@ -94,22 +94,24 @@ def run_dijkstra(graph, source):
 
     V = len(graph)
     Pqueue = []
-    d = [float('inf')]*V
-    d[source] = 0
+    dist = {}
+    for node in graph:
+        dist[node]= float('inf')
+    dist[source] = 0
     heapq.heappush(Pqueue, (0, source))
 
     while Pqueue:
         d, u = heapq.heappop(Pqueue)
 
-        if d > d[u]:
+        if d > dist[u]:
             continue
 
         for v, w in graph[u]:
-            if d[u] + w < d[v]:
-                d[v] = d[u]+w
-                heapq.heappush(Pqueue, (d[v], v))
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u]+w
+                heapq.heappush(Pqueue, (dist[v], v))
 
-    return d
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -130,28 +132,18 @@ def precompute_distances(graph, spawn, relics, exit_node):
     TODO
     """
 
-    s = []
-    visited = set()
+    sources = select_sources(spawn, relics, exit_node)
 
-    if exit_node not in visited:
-            s.append(exit_node)
-            visited.add(exit_node)
+    dist_table = {}
 
-    if spawn not in visited:
-            s.append(spawn)
-            visited.add(spawn)
+    for source in sources:
+        distances = run_dijkstra(graph, source)
 
-    for node in [relics]:
-        if node not in visited:
-            s.append(node)
-            visited.add(node)
-
-    d = {}
-
-    for source in s:
-        d[source]=run_dijkstra(graph, source)
-
-    return d
+        for node in distances:
+            d = distances[node]
+            dist_table[(source, node)] = d
+    
+    return dist_table
 
 
 # =============================================================================
@@ -255,7 +247,11 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    currBest = [float("inf"), []]
+
+    _explore(dist_table, spawn, relics, [], 0, exit_node, currBest)
+    
+    return (currBest[0],currBest[1])
 
 
 def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
@@ -287,9 +283,35 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     explaining why it is safe (cannot skip the optimal solution).
     This comment is graded.
     """
-    pass
 
+    # pruning: costs will only increase/stay the same in the future
+    #          so once it is >= best, it is impossible to be more optimal than the current best.
+    if cost_so_far >= best[0]:
+        return
+    
+    if not relics_remaining:
+        exit = dist_table[(current_loc),(exit_node)]
 
+        if exit == float("inf"):
+            return
+        
+        total = cost_so_far + exit
+        if total < best[0]:
+            best[0] = total
+            best[1] = relics_visited_order[:]
+        return
+    
+    for relic in relics_remaining:
+        d = dist_table[(current_loc),(relic)]
+        if d == float("inf"):
+            continue
+        new_remaining = relics_remaining[:]
+        new_remaining.remove(relic)
+        relics_visited_order.append(relic)
+
+        _explore(dist_table, relic, new_remaining, relics_visited_order, (cost_so_far+d) , exit_node, best)
+        relics_visited_order.pop()
+        new_remaining.append(relic)
 # =============================================================================
 # PIPELINE
 # =============================================================================
@@ -311,7 +333,8 @@ def solve(graph, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    return find_optimal_route(dist_table, spawn, relics, exit_node)
 
 
 # =============================================================================
